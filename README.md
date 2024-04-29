@@ -338,4 +338,49 @@ FROM excluded_users;
  defining a table named excluded_users that selects all users except those with user IDs '2007001', '2007002', and '2007003'.
 
 
+# Save the SQL command output
+## Save the SQL command output in CSV file
+> Simply change the folder path and your sql command.
+```
+SET COLSEP ","
+SET HEADING OFF
+SET PAGESIZE 0
+SET FEEDBACK OFF
+SPOOL C:\Users\Tamim\Desktop\file1.sql
+SELECT *
+FROM user_table;
+SPOOL OFF
 
+```
+## Save the SQL command output in txt file
+> Simply change the folder path and your sql command.
+```
+SPOOL C:\Users\Tamim\Desktop\file2.sql
+SELECT *
+FROM time_schedule;
+SPOOL OFF
+```
+## Aggregate function
+We count how many row exist in dept table.
+```
+select count(*) from user_table;
+ ```
+
+ We also give alias name to any output in select command.
+ ```
+select count(dept_name) as number_of_dept from dept;
+ ```
+We can count distinct uploader name in day_schedule.
+ ```
+select count(distinct uploader) as users from day_schedule;
+ ```
+We can count average and total task in notification.
+ ```
+select avg(task_id) from notification;
+select sum(task_id) from notification;
+ ```
+We can find max and min task_id of any notification from notification table.
+ ```
+ select max(task_id) from notification;
+ select min(task_id) from notification;
+```
