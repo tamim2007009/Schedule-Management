@@ -125,7 +125,7 @@ create table user_table(
         day VARCHAR(10),
         uploader VARCHAR(30),
        upload_time VARCHAR(20),
-        user_id VARCHAR(50),
+        user_id VARCHAR(50) not null,
        FOREIGN KEY (user_id) REFERENCES user_table(user_id)
     );
 
@@ -266,6 +266,76 @@ VALUES (207, '2007010', 'You need to research on new technology.', 0);
 ```
 ![alt text](https://github.com/tamim2007009/Schedule-Management/blob/main/Assets/data1.PNG)
 ![alt text](https://github.com/tamim2007009/Schedule-Management/blob/main/Assets/data2.PNG)
+
+## Displaying table using SELECT command
+```
+select * from user_table where user_id =2007009;
+```
+```
+select * from user_table where user_id >2007001 and user_id <2007009;
+```
+Nested select and project command
+```
+select * from user_table where user_id =(select user_id from day_schedule where uploader='Tamim');
+```
+## Update data in a table
+```
+update time_schedule set time ='10:00 PM' where task_id=209;
+```
+
+## Deleting row from a table
+```
+ delete from time_schedule where task_id=113;
+```
+# union, intersect, and except
+
+```
+SELECT user_id FROM user_table
+UNION
+SELECT user_id FROM day_schedule;
+
+```
+This query will return a list of all unique user_ids from both tables, effectively combining the two lists and removing any duplicates.
+
+```
+SELECT user_id FROM user_table
+INTERSECT
+SELECT user_id FROM day_schedule;
+
+```
+This query will return only the user_ids that are common to both tables.
+
+```
+
+SELECT user_id FROM user_table
+MINUS
+SELECT user_id FROM day_schedule;
+
+```
+This query will return the user_ids that are present in the user_table but not in the day_schedule table.
+
+```
+SELECT *
+FROM user_table
+MINUS
+SELECT *
+FROM user_table
+WHERE user_id IN ('2007001', '2007002', '2007003');
+
+```
+
+## With clause
+```
+WITH excluded_users AS (
+    SELECT *
+    FROM user_table
+    WHERE user_id NOT IN ('2007001', '2007002', '2007003')
+)
+SELECT *
+FROM excluded_users;
+
+```
+ defining a table named excluded_users that selects all users except those with user IDs '2007001', '2007002', and '2007003'.
 
 
 
