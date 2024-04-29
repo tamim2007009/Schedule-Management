@@ -384,3 +384,25 @@ We can find max and min task_id of any notification from notification table.
  select max(task_id) from notification;
  select min(task_id) from notification;
 ```
+## Order by clause
+```
+select * from day_schedule order by upload_time;
+```
+This will show data in ascending(by default) order base on order by condition
+```
+select * from user_table order by name desc;
+```
+# Group by and Having
+```
+select is_completed,count(*) from notification group by is_completed;
+```
+This command will find no of task completed and not completed
+```
+ select day,count(*) from day_schedule group by day;
+```
+Adding HAVING after that
+```
+ select day,count(*) from day_schedule group by day having count(*)>1;
+```
+
+The WHERE clause places conditions on the selected columns , whereas the HAVING clause places conditions on groups created by the GROUP BY clause
