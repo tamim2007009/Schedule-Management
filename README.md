@@ -406,3 +406,47 @@ Adding HAVING after that
 ```
 
 The WHERE clause places conditions on the selected columns , whereas the HAVING clause places conditions on groups created by the GROUP BY clause
+
+
+
+# PL/SQL
+## PL/SQL variable declaration and print value
+```
+set serveroutput on
+declare
+    id user_table.user_id%type;
+    name user_table.name%type;
+    email user_table.email%type;
+    password user_table.password%type; 
+begin
+    select user_id, name, email, password
+    into id, name, email, password
+    from user_table
+    where user_id = '2007009'; 
+    
+    dbms_output.put_line('ID: '||id|| ' Name: '||name || ' Email: '||email||' Password: '||password);
+exception
+    when no_data_found then
+        dbms_output.put_line('User not found.');
+end;
+/
+
+```
+
+## Insert and set default values
+
+```
+set serveroutput on
+declare
+    id user_table.user_id%type := '2007011';
+    name user_table.name%type := 'Tashib';
+    email user_table.email%type := 'tashib@gmail.com';
+    password user_table.password%type := 'tashib';
+begin
+    insert into user_table(user_id, name, email, password) values (id, name, email, password);
+    dbms_output.put_line('User inserted successfully.');
+end;
+/
+
+```
+
