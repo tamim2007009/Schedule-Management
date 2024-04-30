@@ -449,4 +449,53 @@ end;
 /
 
 ```
+## Row type
+```
+set serveroutput on
+declare
+    user user_table%rowtype;
+begin
+    select * into user from user_table where user_id = '2007009';
+    dbms_output.put_line('User ID: '||user.user_id);
+    dbms_output.put_line('Name: '||user.name);
+    dbms_output.put_line('Email: '||user.email);
+    dbms_output.put_line('Password: '||user.password);
+end;
+/
+
+```
+This will declare entire row at a time
+
+
+## IF/ELSE and USER INPUT
+```
+SET SERVEROUTPUT ON;
+DECLARE
+    user_id_input VARCHAR2(20); 
+    user user_table%ROWTYPE;
+BEGIN
+  
+    user_id_input := '&Enter_your_user_id';
+
+    SELECT * INTO user FROM user_table WHERE user_id = user_id_input;
+
+  
+    IF user.user_id IS NOT NULL THEN
+      
+        DBMS_OUTPUT.PUT_LINE('User ID: '||user.user_id);
+        DBMS_OUTPUT.PUT_LINE('Name: '||user.name);
+        DBMS_OUTPUT.PUT_LINE('Email: '||user.email);
+        DBMS_OUTPUT.PUT_LINE('Password: '||user.password);
+    ELSE
+      
+        DBMS_OUTPUT.PUT_LINE('User does not exist.');
+    END IF;
+END;
+/
+
+```
+
+## LOOPS
+
+
 
