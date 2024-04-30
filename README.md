@@ -496,6 +496,163 @@ END;
 ```
 
 ## LOOPS
+```
+SET SERVEROUTPUT ON;
+DECLARE
+   i number(2);
+begin
+   i:=1;
+   loop
+      dbms_output.put_line(i);
+      i:=i+1;
+      exit when i>20;
+   end loop;
+END;
+/
 
+```
+This command will print values from 1 to 20
+
+```
+SET SERVEROUTPUT ON;
+DECLARE
+    user_row user_table%ROWTYPE; 
+BEGIN
+    
+    FOR user_row IN (SELECT * FROM user_table) LOOP
+    
+        IF user_row.name = 'Raihan' THEN
+            DBMS_OUTPUT.PUT_LINE('User ID: '||user_row.user_id);
+            DBMS_OUTPUT.PUT_LINE('Name: '||user_row.name);
+            DBMS_OUTPUT.PUT_LINE('Email: '||user_row.email);
+            DBMS_OUTPUT.PUT_LINE('Password: '||user_row.password);
+        END IF;
+    END LOOP;
+END;
+/
+
+```
+# Cursors
+//should be add
+
+# procedures
+
+```
+CREATE OR REPLACE PROCEDURE SayHello(
+    p_name IN VARCHAR2
+)
+IS
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Hello, ' || p_name || '!');
+END;
+/
+
+```
+Now call the procedure
+```
+
+
+
+BEGIN
+    SayHello('Tamim');
+END;
+/
+
+```
+
+
+
+```
+CREATE OR REPLACE PROCEDURE GetUserDetails(
+    p_user_id IN VARCHAR2,
+    p_user_name OUT VARCHAR2,
+    p_user_email OUT VARCHAR2,
+    p_user_password OUT VARCHAR2
+)
+IS
+BEGIN
+    SELECT name, email, password INTO p_user_name, p_user_email, p_user_password
+    FROM user_table
+    WHERE user_id = p_user_id;
+END;
+/
+
+```
+procedure created
+
+```
+
+DECLARE
+    v_user_name user_table.name%TYPE;
+    v_user_email user_table.email%TYPE;
+    v_user_password user_table.password%TYPE;
+BEGIN
+    GetUserDetails('2007003', v_user_name, v_user_email, v_user_password); 
+    DBMS_OUTPUT.PUT_LINE('User Name: ' || v_user_name);
+    DBMS_OUTPUT.PUT_LINE('User Email: ' || v_user_email); 
+    DBMS_OUTPUT.PUT_LINE('User Password: ' || v_user_password); 
+END;
+/
+```
+calling the procedure
+
+# Function
+```
+CREATE OR REPLACE FUNCTION AddNumbers(
+    p_num1 IN NUMBER,
+    p_num2 IN NUMBER
+)
+RETURN NUMBER
+IS
+    v_sum NUMBER;
+BEGIN
+  
+    v_sum := p_num1 + p_num2;
+    RETURN v_sum;
+END;
+/
+
+```
+
+Now call the function
+
+```
+DECLARE
+    result NUMBER;
+BEGIN
+    result := AddNumbers(10, 20);
+    DBMS_OUTPUT.PUT_LINE('The sum is: ' || result);
+END;
+/
+
+```
+```
+CREATE OR REPLACE FUNCTION GetUserEmail(
+    p_user_id IN VARCHAR2
+)
+RETURN VARCHAR2
+IS
+    v_email VARCHAR2(100);
+BEGIN
+    
+    SELECT email INTO v_email
+    FROM user_table
+    WHERE user_id = p_user_id;
+    RETURN v_email;
+    
+END;
+/
+```
+
+```
+DECLARE
+    result VARCHAR2(100); 
+BEGIN
+    result := GetUserEmail('2007003');
+    DBMS_OUTPUT.PUT_LINE('The email is: ' || result);
+END;
+/
+
+```
 
 
