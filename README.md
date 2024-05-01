@@ -702,8 +702,38 @@ BEGIN
 END;
 /
 ```
+
+```
 DELETE FROM notification WHERE task_id = 201;
 ```
 
+ ## Updating 
+ ```
+SET SERVEROUTPUT ON;
+CREATE OR REPLACE TRIGGER update_notification_trigger
+BEFORE UPDATE ON notification
+FOR EACH ROW
+BEGIN
+    IF :OLD.is_completed = 0 AND :NEW.is_completed = 1 THEN
+        DBMS_OUTPUT.PUT_LINE('Task completed! Updating time_schedule...');
+        UPDATE time_schedule
+        SET is_completed = 1
+        WHERE task_id = :OLD.task_id;
+    END IF;
+END;
+/
+
+```
+```
+UPDATE notification
+SET is_completed = 1,message_new='renewed library book'
+WHERE task_id = 201;
+```
+
+Termination
+```
+show errors;
+select * from user_triggers;
+drop trigger TRIGGER_name;
 ```
 
