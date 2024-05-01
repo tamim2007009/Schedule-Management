@@ -626,6 +626,7 @@ END;
 /
 
 ```
+function for user_table
 ```
 CREATE OR REPLACE FUNCTION GetUserEmail(
     p_user_id IN VARCHAR2
@@ -643,7 +644,7 @@ BEGIN
 END;
 /
 ```
-
+Now call the function
 ```
 DECLARE
     result VARCHAR2(100); 
@@ -655,4 +656,54 @@ END;
 
 ```
 
+
+> A function must return a value and procedure cannot return a value.
+
+## drop procedure and function
+> Stucture: drop procedure procedure_name
+> Stucture: drop function function_name
+```
+drop procedure proc;
+drop function fun;
+```
+## Trigger
+**Trigger body**
+```
+create trigger [trigger_name] 
+[before | after]  
+{insert | update | delete}  
+on [table_name]  
+[for each row]  
+[trigger_body] 
+```
+
+```
+SET SERVEROUTPUT ON;
+create or replace trigger user_insert
+after insert on user_table
+begin
+    dbms_output.put_line('Record inserted');
+end;
+/
+```
+```
+insert into user_table values('2007012','Tanvir','tanvir@gmail.com','tanvir');
+```
+
+
+## For executing command where integrity constraints exists
+```
+SET SERVEROUTPUT ON;
+CREATE OR REPLACE TRIGGER delete_time_schedule
+BEFORE DELETE ON notification 
+FOR EACH ROW
+BEGIN
+    DELETE FROM time_schedule WHERE task_id = :OLD.task_id;
+END;
+/
+```
+DELETE FROM notification WHERE task_id = 201;
+```
+
+```
 
