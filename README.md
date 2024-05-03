@@ -533,7 +533,41 @@ END;
 
 ```
 # Cursors
-//should be add
+```
+
+SET SERVEROUTPUT ON;
+
+
+DECLARE
+    CURSOR notification_cursor IS
+        SELECT task_id, user_id, message_new, is_completed
+        FROM notification;
+    notification_row notification%ROWTYPE;
+BEGIN
+ 
+    OPEN notification_cursor;
+    
+  
+    FETCH notification_cursor INTO notification_row;
+    
+    
+    WHILE notification_cursor%FOUND LOOP
+        
+        DBMS_OUTPUT.PUT_LINE('Task ID: ' || notification_row.task_id || 
+                             ', User ID: ' || notification_row.user_id ||
+                             ', Message: ' || notification_row.message_new ||
+                             ', Completed: ' || notification_row.is_completed);
+        
+     
+        FETCH notification_cursor INTO notification_row;
+    END LOOP;
+
+    CLOSE notification_cursor;
+END;
+/
+
+```
+This PL/SQL block declares a cursor notification_cursor to fetch data from the notification table. It then opens the cursor, fetches data row by row into the notification_row variable, processes each row by printing it, and finally closes the cursor.
 
 # procedures
 
