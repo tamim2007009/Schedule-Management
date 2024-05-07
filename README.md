@@ -367,9 +367,7 @@ select count(*) from user_table;
  ```
 
  We also give alias name to any output in select command.
- ```
-select count(dept_name) as number_of_dept from dept;
- ```
+
 We can count distinct uploader name in day_schedule.
  ```
 select count(distinct uploader) as users from day_schedule;
