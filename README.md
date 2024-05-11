@@ -566,6 +566,28 @@ END;
 
 ```
 This PL/SQL block declares a cursor notification_cursor to fetch data from the notification table. It then opens the cursor, fetches data row by row into the notification_row variable, processes each row by printing it, and finally closes the cursor.
+```
+SET SERVEROUTPUT ON;
+DECLARE
+    CURSOR c IS SELECT * FROM user_table;
+    x user_table%ROWTYPE;
+BEGIN
+    OPEN c;
+    FETCH c INTO x;
+    IF c%ISOPEN THEN
+        LOOP
+            DBMS_OUTPUT.PUT_LINE(c%ROWCOUNT);
+            FETCH c INTO x;
+            EXIT WHEN c%NOTFOUND;
+        END LOOP;
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('End of row');
+    END IF;
+    CLOSE c;
+END;
+/
+
+```
 
 # procedures
 
