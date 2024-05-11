@@ -768,4 +768,6 @@ show errors;
 select * from user_triggers;
 drop trigger TRIGGER_name;
 ```
-
+## Reference
+**Silberschatz, A., Korth, H. F., & Sudarshan, S. (2023). Database System Concepts (7th ed.).**
+**(https://github.com/shahidul034/Database-Lab-Tutorial)**
